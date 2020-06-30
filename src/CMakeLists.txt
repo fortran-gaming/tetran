@@ -21,11 +21,10 @@ add_library(shapes OBJECT shapes.f90 fields.f90 rot90.f90
 
 
 add_library(cinterc OBJECT cinter.c)
-target_include_directories(cinterc PRIVATE ${CURSES_INCLUDE_DIRS})
-target_link_libraries(cinterc PRIVATE ${CURSES_LIBRARIES})
+target_link_libraries(cinterc PRIVATE Curses::Curses)
 
 add_library(cinter OBJECT cinter.f90)
-target_link_libraries(cinter PRIVATE cinterc ${CURSES_LIBRARIES})
+target_link_libraries(cinter PRIVATE cinterc Curses::Curses)
 if(WIN32)
   target_sources(cinter PRIVATE wincinter.f90)
 else()
@@ -33,7 +32,7 @@ else()
 endif()
 
 add_library(errs OBJECT err.f90)
-target_link_libraries(errs PRIVATE cinter ${CURSES_LIBRARIES})
+target_link_libraries(errs PRIVATE cinter Curses::Curses)
 
 add_library(menu OBJECT menu.f90)
 target_link_libraries(menu PRIVATE cinter shapes blocks)
